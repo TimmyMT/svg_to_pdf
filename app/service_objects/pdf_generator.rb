@@ -3,7 +3,7 @@ class PdfGenerator
 
   def initialize(svg_path:)
     @svg_path = svg_path
-    @pdf_path = "output#{DateTime.now.to_s}.pdf"
+    @pdf_path = "tmp/cache/output#{DateTime.now.to_s}.pdf"
 
     @svg_data = File.read(svg_path)
   end
