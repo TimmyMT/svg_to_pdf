@@ -42,5 +42,7 @@ class PdfGenerator
           rotate_around: :center
       end
     end
+
+    pdf_path
   end
 end
