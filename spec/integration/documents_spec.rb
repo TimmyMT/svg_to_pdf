@@ -10,21 +10,21 @@ RSpec.describe 'Documents API', type: :request do
 
       response '201', 'document created' do
         schema type: :object,
-        properties: {
-          id: { type: :integer },
-          name: { type: :string },
-          pdf_url: { type: :string, format: :uri }
-        },
-        required: ['id', 'name', 'pdf_url']
+               properties: {
+                 id: { type: :integer },
+                 name: { type: :string },
+                 pdf_url: { type: :string, format: :uri }
+               },
+               required: %w[id name pdf_url]
 
         let(:file) { fixture_file_upload('spec/fixtures/ruby.svg', 'image/svg+xml') }
 
         run_test! do
-          expect(JSON.parse(response.body)['name']).to eq("ruby.svg")
+          expect(JSON.parse(response.body)['name']).to eq('ruby.svg')
           expect(Document.count).to eq(1)
           expect(Document.last.pdf_file.present?).to eq(true)
           expect(Document.last.pdf_file.attached?).to eq(true)
-          expect(Document.last.pdf_file.record.name).to eq("ruby.svg")
+          expect(Document.last.pdf_file.record.name).to eq('ruby.svg')
         end
       end
 

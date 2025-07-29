@@ -14,5 +14,5 @@ Rails.application.routes.draw do
     post :create
   end
 
-  root "documents#index"
+  root 'documents#index'
 end

@@ -11,28 +11,28 @@ class Api::V1::DocumentsController < ApplicationController
       document.pdf_file.attach(
         io: File.open(pdf_path),
         filename: File.basename(pdf_path),
-        content_type: "application/pdf"
+        content_type: 'application/pdf'
       )
 
       render json: document, status: :created
     rescue StandardError => e
       Rails.logger.error("PDF generation or attachment failed: #{e.message}")
-      render_error("Failed to generate or attach PDF", :unprocessable_entity)
+      render_error('Failed to generate or attach PDF', :unprocessable_entity)
     end
   end
 
   private
 
   def file_present?
-    unless params[:file].present?
-      render_error("Failed to generate or attach PDF", :bad_request)
-    end
+    return if params[:file].present?
+
+    render_error('Failed to generate or attach PDF', :bad_request)
   end
 
   def valid_file_type?
-    if params[:file].content_type != "image/svg+xml"
-      render_error("Only SVG files are allowed", :unsupported_media_type)
-    end
+    return unless params[:file].content_type != 'image/svg+xml'
+
+    render_error('Only SVG files are allowed', :unsupported_media_type)
   end
 
   def render_error(message, status)

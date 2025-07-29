@@ -3,7 +3,7 @@ class PdfGenerator
 
   def initialize(svg_path:)
     @svg_path = svg_path
-    @pdf_path = "tmp/cache/output#{DateTime.now.to_s}.pdf"
+    @pdf_path = "tmp/cache/output#{DateTime.now}.pdf"
 
     @svg_data = File.read(svg_path)
   end
@@ -24,11 +24,11 @@ class PdfGenerator
       page_width  = pdf.bounds.width
       page_height = pdf.bounds.height
 
-      watermark_text = "Timur Karimov"
+      watermark_text = 'Timur Karimov'
       font_size = 48
 
       # Установим стиль
-      pdf.fill_color "000000"
+      pdf.fill_color '000000'
       pdf.font_size font_size
 
       # Размер прямоугольника для watermark'а
@@ -40,14 +40,14 @@ class PdfGenerator
 
       pdf.transparent(0.2) do
         pdf.text_box watermark_text,
-          at: [x, y],
-          width: box_width,
-          height: box_height,
-          align: :center,
-          valign: :center,
-          size: font_size,
-          rotate: 45,
-          rotate_around: :center
+                     at: [x, y],
+                     width: box_width,
+                     height: box_height,
+                     align: :center,
+                     valign: :center,
+                     size: font_size,
+                     rotate: 45,
+                     rotate_around: :center
       end
     end
   end
