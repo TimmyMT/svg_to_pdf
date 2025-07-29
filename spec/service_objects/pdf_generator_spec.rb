@@ -13,7 +13,7 @@ RSpec.describe PdfGenerator do
     end
 
     it 'includes the watermark text' do
-      pdf_path = described_class.new(svg_path: svg_path).call
+      pdf_path = service.call
 
       reader = PDF::Reader.new(pdf_path)
       actual_chars = reader.pages.map(&:text).join.gsub(/\s+/, '').chars.sort
