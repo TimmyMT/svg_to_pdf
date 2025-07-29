@@ -9,6 +9,14 @@ class PdfGenerator
   end
 
   def call
+    document_generate
+
+    pdf_path
+  end
+
+  private
+
+  def document_generate
     Prawn::Document.generate(pdf_path, page_size: 'A4') do |pdf|
       pdf.svg svg_data, at: [0, pdf.cursor], width: 500
 
@@ -42,7 +50,5 @@ class PdfGenerator
           rotate_around: :center
       end
     end
-
-    pdf_path
   end
 end

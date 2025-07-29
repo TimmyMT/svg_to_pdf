@@ -68,6 +68,8 @@ group :development, :test do
   gem 'rswag'
   gem 'rspec-rails'
   gem 'rswag-specs'
+
+  gem "pdf-reader", "~> 2.14"
 end
 
 group :test do

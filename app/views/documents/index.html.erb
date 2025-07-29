@@ -1,0 +1,49 @@
+<H1>Генерация документа</H1>
+
+<%= form_with url: "/api/v1/documents", method: :post, id: 'form' do |form| %>
+  <%= form.label :file, "Choose file" %>
+  <%= form.file_field :file %>
+  <%= form.submit "generate" %>
+<% end %>
+
+<div id="result"></div>
+
+<script>
+  const form = document.getElementById("form");
+  const resultDiv = document.getElementById("result");
+
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const url = form.action;
+    const formData = new FormData(form);
+    resultDiv.textContent = "Загрузка...";
+
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        body: formData,
+        headers: {
+          "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content
+        }
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || "Ошибка запроса");
+      }
+
+      const data = await response.json();
+      const link = document.createElement("a");
+
+      link.href = data.pdf_url;
+      link.textContent = "Скачать файл";
+      link.target = "_blank";
+
+      resultDiv.textContent = "Успешно: ";
+      resultDiv.appendChild(link);
+    } catch (error) {
+      resultDiv.textContent = "Ошибка: " + error.message;
+    }
+  });
+</script>
